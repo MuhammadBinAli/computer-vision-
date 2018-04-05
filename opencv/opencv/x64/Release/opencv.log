@@ -1,0 +1,4 @@
+﻿  Source.cpp
+Source.obj : error LNK2001: unresolved external symbol "struct cv::Ptr<class cv::face::BasicFaceRecognizer> __cdecl cv::face::createEigenFaceRecognizer(int,double)" (?createEigenFaceRecognizer@face@cv@@YA?AU?$Ptr@VBasicFaceRecognizer@face@cv@@@2@HN@Z)
+Source.obj : error LNK2001: unresolved external symbol "public: int __cdecl cv::face::FaceRecognizer::predict(class cv::_InputArray const &)const " (?predict@FaceRecognizer@face@cv@@QEBAHAEBV_InputArray@3@@Z)
+D:\programing\c++\face opencv\opencv\x64\Release\opencv.exe : fatal error LNK1120: 2 unresolved externals

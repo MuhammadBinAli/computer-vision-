@@ -1,0 +1,15 @@
+﻿  Source.cpp
+d:\programing\c++\image processing\cars  npr\air\opencv\opencv\source.cpp(35): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\programing\c++\image processing\cars  npr\air\opencv\opencv\source.cpp(36): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\programing\c++\image processing\cars  npr\air\opencv\opencv\source.cpp(37): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\programing\c++\image processing\cars  npr\air\opencv\opencv\source.cpp(38): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\programing\c++\image processing\cars  npr\air\opencv\opencv\source.cpp(44): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\programing\c++\image processing\cars  npr\air\opencv\opencv\source.cpp(45): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\programing\c++\image processing\cars  npr\air\opencv\opencv\source.cpp(46): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\programing\c++\image processing\cars  npr\air\opencv\opencv\source.cpp(47): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\programing\c++\image processing\cars  npr\air\opencv\opencv\source.cpp(51): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\programing\c++\image processing\cars  npr\air\opencv\opencv\source.cpp(52): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\programing\c++\image processing\cars  npr\air\opencv\opencv\source.cpp(53): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\programing\c++\image processing\cars  npr\air\opencv\opencv\source.cpp(54): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  opencv.vcxproj -> D:\programing\c++\Image Processing\CARS  NPR\AIR\opencv\x64\Debug\opencv.exe
+  opencv.vcxproj -> D:\programing\c++\Image Processing\CARS  NPR\AIR\opencv\x64\Debug\opencv.pdb (Full PDB)

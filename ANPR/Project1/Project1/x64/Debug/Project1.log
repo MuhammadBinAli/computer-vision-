@@ -1,0 +1,23 @@
+﻿  Capture.cpp
+d:\programing\pangay\project1\project1\CaptureVideo.h(6): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+d:\programing\pangay\project1\project1\CaptureVideo.h(399): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+d:\programing\pangay\project1\project1\CaptureVideo.h(400): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\opencv\build\include\opencv2\core\cvstd.hpp(599): warning C4793: 'cv::String::String': function compiled as native:
+  	Found an intrinsic not supported in managed code
+c:\opencv\build\include\opencv2\core\mat.inl.hpp(392): warning C4793: 'cv::Mat::Mat': function compiled as native:
+  	Found an intrinsic not supported in managed code
+c:\opencv\build\include\opencv2\core\mat.inl.hpp(681): warning C4793: 'cv::Mat::release': function compiled as native:
+  	Found an intrinsic not supported in managed code
+c:\opencv\build\include\opencv2\core\mat.inl.hpp(1872): warning C4793: 'cv::SparseMat::addref': function compiled as native:
+  	Found an intrinsic not supported in managed code
+c:\opencv\build\include\opencv2\core\mat.inl.hpp(3473): warning C4793: 'cv::UMat::addref': function compiled as native:
+  	Found an intrinsic not supported in managed code
+c:\opencv\build\include\opencv2\core\ptr.inl.hpp(67): warning C4793: 'cv::detail::PtrOwner::incRef': function compiled as native:
+  	Found an intrinsic not supported in managed code
+c:\opencv\build\include\opencv2\core\ptr.inl.hpp(72): warning C4793: 'cv::detail::PtrOwner::decRef': function compiled as native:
+  	Found an intrinsic not supported in managed code
+  AssemblyInfo.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
+Capture.obj : warning LNK4248: unresolved typeref token (01000028) for 'CvCapture'; image may not run
+Capture.obj : warning LNK4248: unresolved typeref token (01000029) for 'cv.IVideoCapture'; image may not run
+  Project1.vcxproj -> D:\programing\PANGAY\Project1\x64\Debug\Project1.exe
+  Project1.vcxproj -> D:\programing\PANGAY\Project1\x64\Debug\Project1.pdb (Partial PDB)

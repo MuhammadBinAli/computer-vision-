@@ -9,7 +9,7 @@
 
 #include "CaptureVideo.h"
 
-using namespace Capture1;
+using namespace  CppCLR_WinformsProjekt;
 
 [STAThreadAttribute]
 int main()
@@ -19,6 +19,6 @@ int main()
 	Application::SetCompatibleTextRenderingDefault(false);
 
 	// Create the main window and run it
-	Application::Run(gcnew Form1());
+	Application::Run(gcnew ANPR());
 	return 0;
 }

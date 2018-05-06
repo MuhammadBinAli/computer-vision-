@@ -1,16 +1,15 @@
+
 #pragma once
 #include "opencv/cv.h"
 #include "opencv/highgui.h"
 #include "opencv2/opencv.hpp"
 #include "opencv2/core/core.hpp"
-#include <string.h>;
-using namespace cv;
-
-VideoCapture capture(0);
-Mat frame;
+#include <string.h>
 
 
-namespace Capture1 {
+int a=0;
+
+namespace CppCLR_WinformsProjekt {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -18,392 +17,473 @@ namespace Capture1 {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Data::SqlClient;
 	using namespace System::Runtime::InteropServices;
+	//using namespace System::Type;
 
-	public ref class Form1 : public System::Windows::Forms::Form
+	using namespace std;
+	using namespace cv;
+
+	VideoCapture capture;
+	Mat frame,car,np;
+	
+
+	/// <summary>
+	/// Zusammenfassung für Form1
+	/// </summary>
+	public ref class ANPR : public System::Windows::Forms::Form
 	{
 	public:
-		Form1(void)
+		ANPR(void)
 		{
 			InitializeComponent();
+			//
+			//TODO: Konstruktorcode hier hinzufügen.
+			//
 		}
 
 	protected:
-		~Form1()
+		/// <summary>
+		/// Verwendete Ressourcen bereinigen.
+		/// </summary>
+		~ANPR()
 		{
 			if (components)
 			{
 				delete components;
 			}
 		}
-
-#pragma region Window_control
-	private: System::Windows::Forms::Panel^  panel1;
-
-
-
-
-
-
-	private: System::Windows::Forms::GroupBox^  groupBox3;
-	private: System::Windows::Forms::Button^  button2;
-	private: System::Windows::Forms::ComboBox^  comboBox1;
-	private: System::Windows::Forms::GroupBox^  groupBox1;
-	private: System::Windows::Forms::TrackBar^  trackBar1;
-	private: System::Windows::Forms::PictureBox^  pictureBox1;
-	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
-	private: System::Windows::Forms::Timer^  timer1;
-	private: System::Windows::Forms::TabControl^  tabControl1;
-	private: System::Windows::Forms::TabPage^  tabPage1;
-	private: System::Windows::Forms::TabPage^  tabPage2;
-	private: System::Windows::Forms::Button^  button3;
-	private: System::Windows::Forms::DataGridView^  dataGridView2;
-	private: System::Windows::Forms::TabPage^  tabPage3;
-	private: System::Windows::Forms::Label^  label1;
-	private: System::Windows::Forms::TextBox^  textBox1;
-	private: System::Windows::Forms::Button^  button1;
-	private: System::Windows::Forms::DataGridView^  dataGridView1;
-
-
-
-
-	private: System::ComponentModel::IContainer^  components;
-#pragma endregion
+	private: System::Windows::Forms::TabControl^  mainTabControl;
+	private: System::Windows::Forms::TabPage^  addLicensePlateTabPage;
+	private: System::Windows::Forms::TabPage^  parkingINTabPage;
 
 	protected:
 
+
+	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::TextBox^  LicencePlateNumbertxt;
+	private: System::Windows::Forms::Button^  addLicencePlatebtn;
+	private: System::Windows::Forms::PictureBox^  pictureBox;
+	private: System::Windows::Forms::Button^  Clickbtn;
+
+	private: System::Windows::Forms::Timer^  timer;
+	private: System::Windows::Forms::Label^  label5;
+	private: System::Windows::Forms::Label^  label4;
+	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::Label^  label2;
+	private: System::Windows::Forms::PictureBox^  pictureBox2;
+	private: System::Windows::Forms::PictureBox^  pictureBox1;
+	private: System::ComponentModel::IContainer^  components;
+
+
+
 	private:
+
+		/// <summary>
+		/// Erforderliche Designervariable.
+		/// </summary>
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Erforderliche Methode für die Designerunterstützung.
+		/// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
 		/// </summary>
 		void InitializeComponent(void)
 		{
 			this->components = (gcnew System::ComponentModel::Container());
-			this->panel1 = (gcnew System::Windows::Forms::Panel());
-			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
-			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
-			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
-			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
-			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
-			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
-			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
-			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
-			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
+			this->mainTabControl = (gcnew System::Windows::Forms::TabControl());
+			this->addLicensePlateTabPage = (gcnew System::Windows::Forms::TabPage());
+			this->addLicencePlatebtn = (gcnew System::Windows::Forms::Button());
+			this->LicencePlateNumbertxt = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
-			this->dataGridView2 = (gcnew System::Windows::Forms::DataGridView());
-			this->button3 = (gcnew System::Windows::Forms::Button());
-			this->panel1->SuspendLayout();
-			this->tabControl1->SuspendLayout();
-			this->tabPage1->SuspendLayout();
-			this->groupBox3->SuspendLayout();
-			this->groupBox1->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
+			this->parkingINTabPage = (gcnew System::Windows::Forms::TabPage());
+			this->Clickbtn = (gcnew System::Windows::Forms::Button());
+			this->pictureBox = (gcnew System::Windows::Forms::PictureBox());
+			this->timer = (gcnew System::Windows::Forms::Timer(this->components));
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->mainTabControl->SuspendLayout();
+			this->addLicensePlateTabPage->SuspendLayout();
+			this->parkingINTabPage->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
-			this->tabPage2->SuspendLayout();
-			this->tabPage3->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			this->SuspendLayout();
 			// 
-			// panel1
+			// mainTabControl
 			// 
-			this->panel1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->panel1->Controls->Add(this->tabControl1);
-			this->panel1->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->panel1->Location = System::Drawing::Point(3, 3);
-			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(385, 431);
-			this->panel1->TabIndex = 0;
+			this->mainTabControl->Controls->Add(this->addLicensePlateTabPage);
+			this->mainTabControl->Controls->Add(this->parkingINTabPage);
+			this->mainTabControl->Location = System::Drawing::Point(2, 0);
+			this->mainTabControl->Name = L"mainTabControl";
+			this->mainTabControl->SelectedIndex = 0;
+			this->mainTabControl->Size = System::Drawing::Size(622, 379);
+			this->mainTabControl->TabIndex = 0;
 			// 
-			// tabControl1
+			// addLicensePlateTabPage
 			// 
-			this->tabControl1->Controls->Add(this->tabPage1);
-			this->tabControl1->Controls->Add(this->tabPage2);
-			this->tabControl1->Controls->Add(this->tabPage3);
-			this->tabControl1->Location = System::Drawing::Point(3, 3);
-			this->tabControl1->Name = L"tabControl1";
-			this->tabControl1->SelectedIndex = 0;
-			this->tabControl1->Size = System::Drawing::Size(380, 427);
-			this->tabControl1->TabIndex = 11;
-//			this->tabControl1->SelectedIndexChanged += gcnew System::EventHandler(this, &Form1::tabControl1_SelectedIndexChanged);
+			this->addLicensePlateTabPage->Controls->Add(this->addLicencePlatebtn);
+			this->addLicensePlateTabPage->Controls->Add(this->LicencePlateNumbertxt);
+			this->addLicensePlateTabPage->Controls->Add(this->label1);
+			this->addLicensePlateTabPage->Location = System::Drawing::Point(4, 22);
+			this->addLicensePlateTabPage->Name = L"addLicensePlateTabPage";
+			this->addLicensePlateTabPage->Padding = System::Windows::Forms::Padding(3);
+			this->addLicensePlateTabPage->Size = System::Drawing::Size(602, 560);
+			this->addLicensePlateTabPage->TabIndex = 0;
+			this->addLicensePlateTabPage->Text = L"Add License Plate";
+			this->addLicensePlateTabPage->UseVisualStyleBackColor = true;
 			// 
-			// tabPage1
+			// addLicencePlatebtn
 			// 
-			this->tabPage1->Controls->Add(this->groupBox3);
-			this->tabPage1->Controls->Add(this->groupBox1);
-			this->tabPage1->Location = System::Drawing::Point(4, 32);
-			this->tabPage1->Name = L"tabPage1";
-			this->tabPage1->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage1->Size = System::Drawing::Size(372, 391);
-			this->tabPage1->TabIndex = 0;
-			this->tabPage1->Text = L"reader";
-			this->tabPage1->UseVisualStyleBackColor = true;
+			this->addLicencePlatebtn->Location = System::Drawing::Point(136, 34);
+			this->addLicencePlatebtn->Name = L"addLicencePlatebtn";
+			this->addLicencePlatebtn->Size = System::Drawing::Size(111, 23);
+			this->addLicencePlatebtn->TabIndex = 2;
+			this->addLicencePlatebtn->Text = L"Add License Plate";
+			this->addLicencePlatebtn->UseVisualStyleBackColor = true;
+			this->addLicencePlatebtn->Click += gcnew System::EventHandler(this, &ANPR::addLicencePlatebtn_Click);
 			// 
-			// groupBox3
+			// LicencePlateNumbertxt
 			// 
-			this->groupBox3->Controls->Add(this->button2);
-			this->groupBox3->Controls->Add(this->comboBox1);
-			this->groupBox3->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->groupBox3->Location = System::Drawing::Point(6, 6);
-			this->groupBox3->Name = L"groupBox3";
-			this->groupBox3->Size = System::Drawing::Size(344, 62);
-			this->groupBox3->TabIndex = 10;
-			this->groupBox3->TabStop = false;
-			this->groupBox3->Text = L"Source";
-			// 
-			// button2
-			// 
-			this->button2->Location = System::Drawing::Point(249, 22);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(79, 30);
-			this->button2->TabIndex = 1;
-			this->button2->Text = L"Start";
-			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &Form1::button2_Click);
-			// 
-			// comboBox1
-			// 
-			this->comboBox1->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
-			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Capture From Camera", L"Capture From File" });
-			this->comboBox1->Location = System::Drawing::Point(8, 23);
-			this->comboBox1->Name = L"comboBox1";
-			this->comboBox1->Size = System::Drawing::Size(235, 27);
-			this->comboBox1->TabIndex = 0;
-			// 
-			// groupBox1
-			// 
-			this->groupBox1->Controls->Add(this->trackBar1);
-			this->groupBox1->Controls->Add(this->pictureBox1);
-			this->groupBox1->Font = (gcnew System::Drawing::Font(L"Calibri", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->groupBox1->Location = System::Drawing::Point(5, 76);
-			this->groupBox1->Margin = System::Windows::Forms::Padding(5);
-			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Padding = System::Windows::Forms::Padding(5);
-			this->groupBox1->Size = System::Drawing::Size(345, 309);
-			this->groupBox1->TabIndex = 9;
-			this->groupBox1->TabStop = false;
-			this->groupBox1->Text = L"Original Video:";
-			// 
-			// trackBar1
-			// 
-			this->trackBar1->AutoSize = false;
-			this->trackBar1->Location = System::Drawing::Point(8, 274);
-			this->trackBar1->Name = L"trackBar1";
-			this->trackBar1->Size = System::Drawing::Size(322, 26);
-			this->trackBar1->TabIndex = 1;
-			this->trackBar1->Scroll += gcnew System::EventHandler(this, &Form1::trackBar1_Scroll);
-			// 
-			// pictureBox1
-			// 
-			this->pictureBox1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->pictureBox1->Location = System::Drawing::Point(8, 28);
-			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(320, 240);
-			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-			this->pictureBox1->TabIndex = 0;
-			this->pictureBox1->TabStop = false;
-			//this->pictureBox1->Click += gcnew System::EventHandler(this, &Form1::pictureBox1_Click);
-			// 
-			// tabPage2
-			// 
-			this->tabPage2->Controls->Add(this->button3);
-			this->tabPage2->Controls->Add(this->dataGridView2);
-			this->tabPage2->Location = System::Drawing::Point(4, 32);
-			this->tabPage2->Name = L"tabPage2";
-			this->tabPage2->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage2->Size = System::Drawing::Size(372, 391);
-			this->tabPage2->TabIndex = 1;
-			this->tabPage2->Text = L"record";
-			this->tabPage2->UseVisualStyleBackColor = true;
-			// 
-			// openFileDialog1
-			// 
-			this->openFileDialog1->FileName = L"openFileDialog1";
-			// 
-			// timer1
-			// 
-			this->timer1->Interval = 30;
-			this->timer1->Tick += gcnew System::EventHandler(this, &Form1::timer1_Tick);
-			// 
-			// tabPage3
-			// 
-			this->tabPage3->Controls->Add(this->label1);
-			this->tabPage3->Controls->Add(this->textBox1);
-			this->tabPage3->Controls->Add(this->button1);
-			this->tabPage3->Controls->Add(this->dataGridView1);
-			this->tabPage3->Location = System::Drawing::Point(4, 32);
-			this->tabPage3->Name = L"tabPage3";
-			this->tabPage3->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage3->Size = System::Drawing::Size(372, 391);
-			this->tabPage3->TabIndex = 2;
-			this->tabPage3->Text = L"search";
-			this->tabPage3->UseVisualStyleBackColor = true;
+			this->LicencePlateNumbertxt->Location = System::Drawing::Point(136, 7);
+			this->LicencePlateNumbertxt->Name = L"LicencePlateNumbertxt";
+			this->LicencePlateNumbertxt->Size = System::Drawing::Size(154, 20);
+			this->LicencePlateNumbertxt->TabIndex = 1;
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(6, 9);
+			this->label1->Location = System::Drawing::Point(7, 7);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(86, 23);
-			this->label1->TabIndex = 11;
-			this->label1->Text = L"Plate NO :";
+			this->label1->Size = System::Drawing::Size(112, 13);
+			this->label1->TabIndex = 0;
+			this->label1->Text = L"Licence Plate Number";
 			// 
-			// textBox1
+			// parkingINTabPage
 			// 
-			this->textBox1->Location = System::Drawing::Point(98, 5);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(147, 31);
-			this->textBox1->TabIndex = 10;
+			this->parkingINTabPage->Controls->Add(this->label5);
+			this->parkingINTabPage->Controls->Add(this->label4);
+			this->parkingINTabPage->Controls->Add(this->label3);
+			this->parkingINTabPage->Controls->Add(this->label2);
+			this->parkingINTabPage->Controls->Add(this->pictureBox2);
+			this->parkingINTabPage->Controls->Add(this->pictureBox1);
+			this->parkingINTabPage->Controls->Add(this->Clickbtn);
+			this->parkingINTabPage->Controls->Add(this->pictureBox);
+			this->parkingINTabPage->Location = System::Drawing::Point(4, 22);
+			this->parkingINTabPage->Name = L"parkingINTabPage";
+			this->parkingINTabPage->Padding = System::Windows::Forms::Padding(3);
+			this->parkingINTabPage->Size = System::Drawing::Size(614, 353);
+			this->parkingINTabPage->TabIndex = 1;
+			this->parkingINTabPage->Text = L"Parking In";
+			this->parkingINTabPage->UseVisualStyleBackColor = true;
+			this->parkingINTabPage->Click += gcnew System::EventHandler(this, &ANPR::parkingINTabPage_Click);
 			// 
-			// button1
+			// Clickbtn
 			// 
-			this->button1->Location = System::Drawing::Point(259, 6);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(107, 30);
-			this->button1->TabIndex = 9;
-			this->button1->Text = L"search";
-			this->button1->UseVisualStyleBackColor = true;
+			this->Clickbtn->Location = System::Drawing::Point(117, 324);
+			this->Clickbtn->Name = L"Clickbtn";
+			this->Clickbtn->Size = System::Drawing::Size(75, 23);
+			this->Clickbtn->TabIndex = 1;
+			this->Clickbtn->Text = L"Start";
+			this->Clickbtn->UseVisualStyleBackColor = true;
+			this->Clickbtn->Click += gcnew System::EventHandler(this, &ANPR::Clickbtn_Click);
 			// 
-			// dataGridView1
+			// pictureBox
 			// 
-			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Location = System::Drawing::Point(3, 70);
-			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->Size = System::Drawing::Size(366, 315);
-			this->dataGridView1->TabIndex = 8;
+			this->pictureBox->Location = System::Drawing::Point(7, 7);
+			this->pictureBox->Name = L"pictureBox";
+			this->pictureBox->Size = System::Drawing::Size(347, 311);
+			this->pictureBox->TabIndex = 0;
+			this->pictureBox->TabStop = false;
 			// 
-			// dataGridView2
+			// timer
 			// 
-			this->dataGridView2->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView2->Location = System::Drawing::Point(6, 6);
-			this->dataGridView2->Name = L"dataGridView2";
-			this->dataGridView2->Size = System::Drawing::Size(363, 342);
-			this->dataGridView2->TabIndex = 0;
+			this->timer->Interval = 50;
+			this->timer->Tick += gcnew System::EventHandler(this, &ANPR::timer_Tick);
 			// 
-			// button3
+			// pictureBox1
 			// 
-			this->button3->Location = System::Drawing::Point(145, 355);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(89, 33);
-			this->button3->TabIndex = 1;
-			this->button3->Text = L"Refresh";
-			this->button3->UseVisualStyleBackColor = true;
+			this->pictureBox1->Location = System::Drawing::Point(360, 32);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(248, 178);
+			this->pictureBox1->TabIndex = 2;
+			this->pictureBox1->TabStop = false;
 			// 
-			// Form1
+			// pictureBox2
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(10, 23);
+			this->pictureBox2->Location = System::Drawing::Point(440, 230);
+			this->pictureBox2->Name = L"pictureBox2";
+			this->pictureBox2->Size = System::Drawing::Size(100, 50);
+			this->pictureBox2->TabIndex = 3;
+			this->pictureBox2->TabStop = false;
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(360, 7);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(29, 13);
+			this->label2->TabIndex = 4;
+			this->label2->Text = L"CAR";
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(360, 213);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(71, 13);
+			this->label3->TabIndex = 5;
+			this->label3->Text = L"Number Plate";
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(360, 305);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(71, 13);
+			this->label4->TabIndex = 6;
+			this->label4->Text = L"Number Plate";
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(437, 305);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(0, 13);
+			this->label5->TabIndex = 7;
+			// 
+			// ANPR
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(391, 437);
-			this->Controls->Add(this->panel1);
-			this->Font = (gcnew System::Drawing::Font(L"Calibri", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
-			this->Margin = System::Windows::Forms::Padding(5);
-			this->MaximizeBox = false;
-			this->MinimizeBox = false;
-			this->Name = L"Form1";
-			this->Padding = System::Windows::Forms::Padding(3);
-			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Capture";
-			this->panel1->ResumeLayout(false);
-			this->tabControl1->ResumeLayout(false);
-			this->tabPage1->ResumeLayout(false);
-			this->groupBox3->ResumeLayout(false);
-			this->groupBox1->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
+			this->ClientSize = System::Drawing::Size(626, 383);
+			this->Controls->Add(this->mainTabControl);
+			this->Name = L"ANPR";
+			this->Text = L"ANPR";
+			this->Load += gcnew System::EventHandler(this, &ANPR::ANPR_Load);
+			this->mainTabControl->ResumeLayout(false);
+			this->addLicensePlateTabPage->ResumeLayout(false);
+			this->addLicensePlateTabPage->PerformLayout();
+			this->parkingINTabPage->ResumeLayout(false);
+			this->parkingINTabPage->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
-			this->tabPage2->ResumeLayout(false);
-			this->tabPage3->ResumeLayout(false);
-			this->tabPage3->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
+	private: System::Void ANPR_Load(System::Object^  sender, System::EventArgs^  e) {
 
-	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e)
-	{
-		if (comboBox1->Text == "")
-		{
-			MessageBox::Show(this, "Select Capture Method", "Error!!!");
-		}
-		if (button2->Text == "Start")
-		{
-			if (comboBox1->Text == "Capture From Camera")
-			{
-				
-				
-				trackBar1->Minimum = 0;
-				trackBar1->Maximum = 1000;
-				button2->Text = "Stop";
-				timer1->Start();
-			}
-			else if (comboBox1->Text == "Capture From File")
-			{
-				
-				openFileDialog1->Filter = "AVI files (*.avi)|*.txt|All files (*.*)|*.*";
-				openFileDialog1->FilterIndex = 2;
-				openFileDialog1->RestoreDirectory = true;
-				openFileDialog1->FileName = "";
-				
-
-				if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK)
-				{
-					char *fileName = (char*)Marshal::StringToHGlobalAnsi(openFileDialog1->FileName).ToPointer();
-
-					VideoCapture c(fileName);
-					capture = c;
-					trackBar1->Minimum = 0;
-					trackBar1->Maximum = 1000;
-					button2->Text = "Stop";
-					timer1->Start();
-				}
-			}
-		}
-		else if (button2->Text == "Stop")
-		{
-			
-			button2->Text = "Start";
-			timer1->Stop();
-		}
 	}
+	private: System::Void addLicencePlatebtn_Click(System::Object^  sender, System::EventArgs^  e) {
+		System::String^ connString = "Data Source = DESKTOP-S4CCM9R\\SQLEXPRESS; Initial Catalog = ANPR; Integrated Security=true";
+		SqlConnection^ connection;
+		connection = gcnew SqlConnection(connString);
 
-	private: System::Void trackBar1_Scroll(System::Object^  sender, System::EventArgs^  e)
-	{
-		//double VideoCapture::get(trackBar1->Value);
-	}
+		SqlCommand^ cmd;
 
-	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e)
-	{
+		System::String^ licensePlateNumber = this->LicencePlateNumbertxt->Text;
+
 		try
 		{
-
-			capture.read(frame);
-			
-			System::Drawing::Graphics^ graphics2 = pictureBox1->CreateGraphics();
-			System::IntPtr ptr2(frame.ptr());
-			System::Drawing::Bitmap^ b2 = gcnew System::Drawing::Bitmap(frame.cols,
-				frame.rows, frame.step, System::Drawing::Imaging::PixelFormat::Format24bppRgb, ptr2);
-			System::Drawing::RectangleF rect2(0, 0, pictureBox1->Width, pictureBox1->Height);
-			graphics2->DrawImage(b2, rect2);
+			connection->Open();
+			cmd = gcnew SqlCommand();
+			cmd->Connection = connection;
+			cmd->CommandText = "AddLicensePlate";
+			cmd->CommandType = CommandType::StoredProcedure;
+			cmd->Parameters->Add("@LicensePlateNumber", SqlDbType::NVarChar)->Value = licensePlateNumber;
+			cmd->ExecuteNonQuery();
+			//MessageBox::Show(licensePlateNumber + " sucessfully added.", "Sucessfully Added", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		}
-		catch (...) {}
+		catch (System::Exception^ ex)
+		{
+			MessageBox::Show(ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+		}
 	}
+
+	private: System::Void timer_Tick(System::Object^  sender, System::EventArgs^  e) {
+		capture.read(frame);
+		frame = finder(frame );
+
+		System::Drawing::Bitmap^ bitmapImg = gcnew System::Drawing::Bitmap
+		(frame.cols, frame.rows, frame.step,
+			System::Drawing::Imaging::PixelFormat::Format24bppRgb, (System::IntPtr) frame.data); a++;
+			
+		System::Drawing::Bitmap^ resultImg = gcnew System::Drawing::Bitmap
+		(pictureBox->Width, pictureBox->Height);
+
+		System::Drawing::Graphics^ g = System::Drawing::Graphics::FromImage(resultImg);
+		g->DrawImage(bitmapImg, 0, 0, pictureBox->Width, pictureBox->Height);
+		pictureBox->Image = resultImg; seter(); 
+
+		pictureBox->Refresh();
+	}
+
+	private: Mat finder(Mat img )
+	{
+
+		resize(img, img, cv::Size(540, 360));
+		// Load cascate classifier placed in sulution folder
+		CascadeClassifier detector;
+		
+		bool loaded = detector.load("cars.xml");
+		// Parameters of detectMultiscale Cascade Classifier
+		int groundThreshold = 2;
+		double scaleStep = 1.1;
+		cv::Size minimalObjectSize(50, 50);
+		cv::Size maximalObjectSize(100, 100);
+		// Vector of returned found
+		vector<Rect> found;
+		// Convert input to greyscale 
+		Mat image_grey;
+		cvtColor(img, image_grey, CV_BGR2GRAY);
+		// why not
+		found.clear();
+		// Detect found
+		detector.detectMultiScale(image_grey, found, scaleStep, groundThreshold, 0 | 2, minimalObjectSize, maximalObjectSize);
+		// Draw circles on the detected found
+		for (int i = 0; i < found.size(); i++)
+		{
+			cv::Point pt1(found[i].x, found[i].y); // Display detected faces on main window - live stream from camera
+			cv::Point pt2((found[i].x + found[i].height), (found[i].y + found[i].width));
+			//rectangle(im, pt1, pt2, Scalar(0, 255, 0), 2, 8, 0);
+
+		}
+
+		//imshow("img", img);
+		return img;
+
+
+	}
+
+			 /*
+			 private: std::byte * matToBytes(Mat image)
+			 {
+			 int size = image.total() * image.elemSize();
+			 std::byte * bytes = new std::byte[size];  // you will have to delete[] that later
+			 std::memcpy(bytes, image.data, size * sizeof(std::byte));
+			 }
+			 */
+	private: System::Void Clickbtn_Click(System::Object^  sender, System::EventArgs^  e) {
+		if (Clickbtn->Text == "Start")
+		{
+			
+			Clickbtn->Text = "Stop";
+
+			capture.open("aa.mp4");
+
+			if (!capture.isOpened())  // check if we succeeded
+				MessageBox::Show("Video Capture failed", "Error", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+			else
+			{
+				timer->Start();
+			}
+
+		}
+		else
+		{
+			capture.release();
+			timer->Stop();
+
+			/*
+			System::String^ connString = "Data Source = DESKTOP-S4CCM9R\\SQLEXPRESS; Initial Catalog = ANPR; Integrated Security=true";
+			SqlConnection^ connection;
+			connection = gcnew SqlConnection(connString);
+			SqlCommand^ cmd;
+			System::String^ licensePlateNumber = this->LicencePlateNumbertxt->Text;
+			try
+			{
+			connection->Open();
+			cmd = gcnew SqlCommand();
+			cmd->Connection = connection;
+			cmd->CommandText = "AddParkingIn";
+			cmd->CommandType = CommandType::StoredProcedure;
+			cmd->Parameters->Add("@LicensePlateID", SqlDbType::Int)->Value = 2;
+
+			Image^ img = pictureBox->Image;
+			ImageConverter converter;
+			int as = 10;
+			Type^ t = Type::typeof(as);
+			byte arr[] = (byte)converter.ConvertTo(img, std::typeof(byte));
+
+			// int size = (int)frame.total() * frame.channels();
+			// std::byte[] data = new byte[size];
+			// frame.get(0, 0, data); // Gets all pixels
+
+			//cmd->Parameters->Add("@ParkingInImage", SqlDbType::VarBinary)->Value = arr;
+
+			//	cmd->ExecuteNonQuery();
+			//MessageBox::Show(licensePlateNumber + " sucessfully added.", "Sucessfully Added", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			}
+			catch (System::Exception^ ex)
+			{
+			MessageBox::Show(ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+			}
+			*/
+			Clickbtn->Text = "Start";
+		}
+
 	
 
+	}
+
+			 private: void seter()
+			 {
+
+				 car = imread("1.png");
+				 np = imread("12.png");
+				 
+				 if (a == 50)
+				 {
+
+					 System::Drawing::Bitmap^ bitmapImg = gcnew System::Drawing::Bitmap
+					 (car.cols, car.rows, car.step,
+						 System::Drawing::Imaging::PixelFormat::Format24bppRgb, (System::IntPtr) car.data);
+
+					 System::Drawing::Bitmap^ resultImg1 = gcnew System::Drawing::Bitmap
+					 (pictureBox1->Width, pictureBox1->Height);
+
+					 System::Drawing::Graphics^ g = System::Drawing::Graphics::FromImage(resultImg1);
+					 g->DrawImage(bitmapImg, 0, 0, pictureBox1->Width, pictureBox1->Height);
+					 pictureBox1->Image = resultImg1;
+
+					 }
+
+				 if (a == 250)
+				 {
+
+					 System::Drawing::Bitmap^ bitmapImg1 = gcnew System::Drawing::Bitmap
+					 (np.cols, np.rows, np.step,
+						 System::Drawing::Imaging::PixelFormat::Format24bppRgb, (System::IntPtr) np.data);
+
+					 System::Drawing::Bitmap^ resultImg2 = gcnew System::Drawing::Bitmap
+					 (pictureBox2->Width, pictureBox2->Height);
+
+					 System::Drawing::Graphics^ g = System::Drawing::Graphics::FromImage(resultImg2);
+					 g->DrawImage(bitmapImg1, 0, 0, pictureBox2->Width, pictureBox2->Height);
+					 pictureBox2->Image = resultImg2;
+
+
+
+				 }
+				 if (a == 280)
+				 {
+					 label5->Text = "MN 1084";
+				 }
+
+
+				 }
+
+					 
+					
+
+	private: System::Void parkingINTabPage_Click(System::Object^  sender, System::EventArgs^  e) {
+	}
 };
 }
-
